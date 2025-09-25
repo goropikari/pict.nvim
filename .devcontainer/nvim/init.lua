@@ -48,7 +48,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   spec = {
     {
-      'goropikari/plugin-template.nvim',
+      'goropikari/pict.nvim',
       dev = true,
       opts = {},
     },
