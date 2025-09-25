@@ -1,5 +1,12 @@
 local M = {}
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'pict',
+  callback = function()
+    vim.bo.commentstring = '# %s'
+  end,
+})
+
 local default_config = {
   path = 'pict',
 }
