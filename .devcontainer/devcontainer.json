@@ -15,5 +15,6 @@
       "target": "/home/vscode/.config/nvim",
       "type": "bind"
     }
-  ]
+  ],
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
 }

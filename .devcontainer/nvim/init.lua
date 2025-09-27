@@ -49,6 +49,9 @@ require('lazy').setup({
   spec = {
     {
       'goropikari/pict.nvim',
+      dependencies = {
+        { 'akinsho/toggleterm.nvim', version = '*', config = true },
+      },
       dev = true,
       opts = {},
     },
@@ -56,7 +59,7 @@ require('lazy').setup({
   dev = {
     path = '/workspaces',
     patterns = { 'goropikari' }, -- For example {"folke"}
-    fallback = true, -- Fallback to git when local plugin doesn't exist
+    fallback = false, -- Fallback to git when local plugin doesn't exist
   },
   checker = { enabled = true },
 })

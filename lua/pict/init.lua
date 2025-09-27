@@ -124,17 +124,35 @@ function M.markdown()
   end)
 end
 
-function M.csv()
+function M.csv(cb)
   M.output(function(data)
-    local bufnr = get_bufnr(get_current_filepath())
-    vim.api.nvim_set_option_value('filetype', 'csv', { buf = bufnr })
-
     local lines = {}
     table.insert(lines, table.concat(data.headers, ','))
     for _, row in ipairs(data.rows) do
       table.insert(lines, table.concat(row, ','))
     end
+    if cb then
+      cb(lines)
+      return
+    end
+    local bufnr = get_bufnr(get_current_filepath())
+    vim.api.nvim_set_option_value('filetype', 'csv', { buf = bufnr })
     vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+  end)
+end
+
+function M.visidata()
+  local status, terminal = pcall(require, 'toggleterm.terminal')
+  if not status then
+    vim.notify('toggleterm.nvim is required for visidata output', vim.log.levels.ERROR)
+    return
+  end
+  M.csv(function(lines)
+    local vd = terminal.Terminal:new({
+      cmd = 'printf ' .. '"' .. table.concat(lines, '\\n') .. '"' .. ' | vd',
+      direction = 'horizontal',
+    })
+    vd:toggle()
   end)
 end
 
